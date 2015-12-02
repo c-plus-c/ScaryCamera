@@ -18,31 +18,31 @@ import java.util.TimerTask;
 
 public class FullscreenActivity extends Activity implements View.OnClickListener {
 
-    //ƒJƒƒ‰ƒvƒŒƒrƒ…[
+    //ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½vï¿½ï¿½ï¿½rï¿½ï¿½ï¿½[
     private CameraPreview cameraPreview;
 
-    //ƒTƒEƒ“ƒhƒv[ƒ‹
+    //ï¿½Tï¿½Eï¿½ï¿½ï¿½hï¿½vï¿½[ï¿½ï¿½
     private SoundPool mSoundPool;
 
-    //ƒƒ‚ƒŠã‚É“Ç‚İ‚Ü‚ê‚½ƒI[ƒfƒBƒI”
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É“Ç‚İï¿½ï¿½Ü‚ê‚½ï¿½Iï¿½[ï¿½fï¿½Bï¿½Iï¿½ï¿½
     private int audioCounter;
 
-    //•|‚¢º‚ÌÄ¶ID
+    //ï¿½|ï¿½ï¿½ï¿½ï¿½ï¿½ÌÄï¿½ID
     private int screamSoundID;
 
-    //u‚Í‚¢ƒ`[ƒYv‰¹º‚ÌÄ¶ID
+    //ï¿½uï¿½Í‚ï¿½ï¿½`ï¿½[ï¿½Yï¿½vï¿½ï¿½ï¿½ï¿½ï¿½ÌÄï¿½ID
     private int poseSoundID;
 
-    //‹©‚ÑºÄ¶‚Æ•|‚¢‰æ‘œ•\¦—p‚Ìƒ^ƒCƒ}[
+    //ï¿½ï¿½ï¿½Ñï¿½ï¿½Äï¿½ï¿½Æ•|ï¿½ï¿½ï¿½æ‘œï¿½\ï¿½ï¿½ï¿½pï¿½Ìƒ^ï¿½Cï¿½}ï¿½[
     private Timer screamTimer;
 
-    //˜AÊ—pƒ^ƒCƒ}[
+    //ï¿½Aï¿½Ê—pï¿½^ï¿½Cï¿½}ï¿½[
     private Timer shotTimer;
 
-    //Šî–{‰æ–Ê‚É–ß‚é‚½‚ß‚Ìƒ^ƒCƒ}[
+    //ï¿½ï¿½{ï¿½ï¿½Ê‚É–ß‚é‚½ï¿½ß‚Ìƒ^ï¿½Cï¿½}ï¿½[
     private Timer returnTimer;
 
-    //Å‘å‚Éˆø‚«ã‚°‚é‘O‚Ì‰¹—Ê‚ğ•Û‘¶‚·‚é•Ï”
+    //ï¿½Å‘ï¿½Éˆï¿½ã‚°ï¿½ï¿½Oï¿½Ì‰ï¿½ï¿½Ê‚ï¿½Û‘ï¿½ï¿½ï¿½ï¿½ï¿½Ïï¿½
     private int previousRingVolume;
 
     @Override
@@ -51,32 +51,32 @@ public class FullscreenActivity extends Activity implements View.OnClickListener
 
         setContentView(R.layout.activity_fullscreen);
 
-        //UIã‚Ìƒrƒ…[‚ğƒJƒƒ‰ƒvƒŒƒrƒ…[‚Éİ’è‚·‚éB
+        //UIï¿½ï¿½Ìƒrï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½vï¿½ï¿½ï¿½rï¿½ï¿½ï¿½[ï¿½Éİ’è‚·ï¿½ï¿½B
         SurfaceView surface = (SurfaceView) findViewById(R.id.surfaceView);
         surface = cameraPreview = new CameraPreview(this, surface, FullscreenActivity.this.getContentResolver());
         surface.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
-        //ƒ{ƒ^ƒ“‚ÌƒŠƒXƒi[‚ğ‚±‚ÌƒNƒ‰ƒX‚Éİ’è‚·‚éB
+        //ï¿½{ï¿½^ï¿½ï¿½ï¿½Ìƒï¿½ï¿½Xï¿½iï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ÌƒNï¿½ï¿½ï¿½Xï¿½Éİ’è‚·ï¿½ï¿½B
         Button button = (Button) findViewById(R.id.shot_button);
         button.setOnClickListener(this);
 
-        //³í‚É“Ç‚İ‚Ü‚ê‚½ƒI[ƒfƒBƒI‚Ì”‚ğWŒv‚·‚éB
+        //ï¿½ï¿½ï¿½ï¿½É“Ç‚İï¿½ï¿½Ü‚ê‚½ï¿½Iï¿½[ï¿½fï¿½Bï¿½Iï¿½Ìï¿½ï¿½ï¿½ï¿½Wï¿½vï¿½ï¿½ï¿½ï¿½B
         audioCounter = 0;
 
-        //ƒTƒEƒ“ƒhƒv[ƒ‹‚ğİ’è‚·‚éB
+        //ï¿½Tï¿½Eï¿½ï¿½ï¿½hï¿½vï¿½[ï¿½ï¿½ï¿½ï¿½İ’è‚·ï¿½ï¿½B
         mSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
 
-        //‰¹ºƒtƒ@ƒCƒ‹‚ªƒTƒEƒ“ƒhƒv[ƒ‹‚É“Ç‚İ‚Ü‚ê‚½‚ÌƒR[ƒ‹ƒoƒbƒN‚ğİ’èB
+        //ï¿½ï¿½ï¿½ï¿½ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½Tï¿½Eï¿½ï¿½ï¿½hï¿½vï¿½[ï¿½ï¿½ï¿½É“Ç‚İï¿½ï¿½Ü‚ê‚½ï¿½ï¿½ï¿½ÌƒRï¿½[ï¿½ï¿½ï¿½oï¿½bï¿½Nï¿½ï¿½İ’ï¿½B
         mSoundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
 
-            //ƒI[ƒfƒBƒI‚ªˆê‚Â“Ç‚İ‚Ü‚ê‚½‚çŒÄ‚Ño‚·ŠÖ”B
+            //ï¿½Iï¿½[ï¿½fï¿½Bï¿½Iï¿½ï¿½ï¿½ï¿½Â“Ç‚İï¿½ï¿½Ü‚ê‚½ï¿½ï¿½Ä‚Ñoï¿½ï¿½ï¿½Öï¿½ï¿½B
             @Override
             public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
-                //“Ç‚İ‚Ü‚ê‚½ƒI[ƒfƒBƒI”‚ğƒCƒ“ƒNƒŠƒƒ“ƒg
+                //ï¿½Ç‚İï¿½ï¿½Ü‚ê‚½ï¿½Iï¿½[ï¿½fï¿½Bï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½Nï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½g
                 ++audioCounter;
 
 
-                //“Ç‚İ‚Ü‚ê‚½ƒI[ƒfƒBƒI”‚ª2‚É’B‚µ‚½‚çB‰eƒ{ƒ^ƒ“‚ğ—LŒø‰»‚·‚éB
+                //ï¿½Ç‚İï¿½ï¿½Ü‚ê‚½ï¿½Iï¿½[ï¿½fï¿½Bï¿½Iï¿½ï¿½ï¿½ï¿½2ï¿½É’Bï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Bï¿½eï¿½{ï¿½^ï¿½ï¿½ï¿½ï¿½Lï¿½ï¿½ï¿½ï¿½B
                 if (audioCounter == 2) {
                     Button b1 = (Button) findViewById(R.id.shot_button);
                     b1.setEnabled(true);
@@ -84,60 +84,61 @@ public class FullscreenActivity extends Activity implements View.OnClickListener
             }
         });
 
-        //‹©‚Ñº‚Ì‰¹ºƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚ŞB
+        //ï¿½ï¿½ï¿½Ñï¿½ï¿½Ì‰ï¿½ï¿½ï¿½ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½Ç‚İï¿½ï¿½ŞB
         screamSoundID = mSoundPool.load(getApplicationContext(), R.raw.scream, 0);
 
-        //u‚Í‚¢ƒ`[ƒYv‚Ì‰¹ºƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚ŞB
+        //ï¿½uï¿½Í‚ï¿½ï¿½`ï¿½[ï¿½Yï¿½vï¿½Ì‰ï¿½ï¿½ï¿½ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½Ç‚İï¿½ï¿½ŞB
         poseSoundID = mSoundPool.load(getApplicationContext(), R.raw.haichizu, 0);
     }
 
     @Override
     public void onClick(View v) {
-        //B‰eƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½
+        //ï¿½Bï¿½eï¿½{ï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½ï¿½
         if (v.getId() == R.id.shot_button) {
-            //B‰eƒ{ƒ^ƒ“‚ğ–³Œø‰»‚·‚éB
+            //ï¿½Bï¿½eï¿½{ï¿½^ï¿½ï¿½ï¿½ğ–³Œï¿½ï¿½ï¿½B
             Button b1 = (Button) findViewById(R.id.shot_button);
             b1.setEnabled(false);
 
-            //u‚Í‚¢ƒ`[ƒYv‚ğÄ¶B
+            //ï¿½uï¿½Í‚ï¿½ï¿½`ï¿½[ï¿½Yï¿½vï¿½ï¿½ï¿½Äï¿½ï¿½B
             mSoundPool.play(poseSoundID, 1.0f, 1.0f, 0, 0, 1.0f);
 
-            //Šeƒ^ƒCƒ}[‚ğ‰Šú‰»
+            //ï¿½eï¿½^ï¿½Cï¿½}ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             screamTimer = new Timer(true);
             returnTimer = new Timer(true);
             shotTimer = new Timer(true);
 
-            //ƒ{ƒ^ƒ“‰Ÿ‰º‚Ì3•bŒã‚ÉˆÈ‰º‚ÌTimerTask.run()‚ÌˆÈ‰º‚Ì“à—e‚ğÀs‚·‚éB
+            //ï¿½{ï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½3ï¿½bï¿½ï¿½ÉˆÈ‰ï¿½ï¿½ï¿½TimerTask.run()ï¿½ÌˆÈ‰ï¿½ï¿½Ì“ï¿½ï¿½eï¿½ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½ï¿½ï¿½B
             screamTimer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    //•|‚¢‰æ‘œ‚ğ•\¦‚³‚¹‚éB
+                    //ï¿½|ï¿½ï¿½ï¿½æ‘œï¿½ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B
                     runOnUiThread(new Runnable() {
                         public void run() {
                             ImageView imageView = (ImageView) findViewById(R.id.scaryImage);
                             imageView.setVisibility(View.VISIBLE);
+                            imageView.bringToFront();
                         }
                     });
 
-                    //ƒI[ƒfƒBƒIƒ}ƒl[ƒWƒƒ‚ğæ“¾
+                    //ï¿½Iï¿½[ï¿½fï¿½Bï¿½Iï¿½}ï¿½lï¿½[ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½æ“¾
                     AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
-                    // Œ»İ‚Ì‰¹—Ê‚ğæ“¾‚µ‚ÄA•Û‘¶‚·‚éB
+                    // ï¿½ï¿½ï¿½İ‚Ì‰ï¿½ï¿½Ê‚ï¿½ï¿½æ“¾ï¿½ï¿½ï¿½ÄAï¿½Û‘ï¿½ï¿½ï¿½ï¿½ï¿½B
                     previousRingVolume = am.getStreamVolume(AudioManager.STREAM_MUSIC);
 
-                    // ƒI[ƒfƒBƒIƒ}ƒl[ƒWƒƒ‚ªİ’è‰Â”\‚ÈÅ‘å‰¹—Ê‚ğæ“¾‚·‚é
+                    // ï¿½Iï¿½[ï¿½fï¿½Bï¿½Iï¿½}ï¿½lï¿½[ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½İ’ï¿½Â”\ï¿½ÈÅ‘å‰¹ï¿½Ê‚ï¿½ï¿½æ“¾ï¿½ï¿½ï¿½ï¿½
                     int ringMaxVolume = am.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
 
-                    // ‰¹—Ê‚ğÅ‘å‰¹—Ê‚Éİ’è‚·‚é
+                    // ï¿½ï¿½ï¿½Ê‚ï¿½ï¿½Å‘å‰¹ï¿½Ê‚Éİ’è‚·ï¿½ï¿½
                     am.setStreamVolume(AudioManager.STREAM_MUSIC, ringMaxVolume, AudioManager.FLAG_PLAY_SOUND);
 
-                    //‹©‚Ñº‚ğÄ¶‚·‚éB
+                    //ï¿½ï¿½ï¿½Ñï¿½ï¿½ï¿½ï¿½Äï¿½ï¿½ï¿½ï¿½ï¿½B
                     mSoundPool.play(screamSoundID, 1.0f, 1.0f, 0, 0, 1.0f);
                 }
             }, 3000);
 
 
-            //ƒ{ƒ^ƒ“‰Ÿ‰º‚Ì3•bŒã‚É1•b‚É5‰ñ˜AÊ‚·‚éBi4•bŠÔ‘±‚¯‚éBj
+            //ï¿½{ï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½3ï¿½bï¿½ï¿½ï¿½1ï¿½bï¿½ï¿½5ï¿½ï¿½Aï¿½Ê‚ï¿½ï¿½ï¿½Bï¿½i4ï¿½bï¿½Ô‘ï¿½ï¿½ï¿½ï¿½ï¿½Bï¿½j
             shotTimer.scheduleAtFixedRate(new TimerTask() {
                 @Override
                 public void run() {
@@ -147,12 +148,12 @@ public class FullscreenActivity extends Activity implements View.OnClickListener
 
                     });
 
-                    //B‰e
+                    //ï¿½Bï¿½e
                     cameraPreview.TakeShot();
                 }
             }, 3000, 200);
 
-            //ƒ{ƒ^ƒ“‰Ÿ‰º‚Ì9•bŒã‚ÉB‰eƒ{ƒ^ƒ“‚Ì—LŒø‰»A•|‚¢‰æ‘œ‚Ì”ñ•\¦AƒI[ƒfƒBƒIƒ}ƒl[ƒWƒƒ‚Ì‰¹—Ê‚ğƒfƒtƒHƒ‹ƒg‚É–ß‚µ‚ÄƒJƒƒ‰ƒvƒŒƒrƒ…[‚ğÄŠJ‚·‚éBiˆê”ÔÅ‰‚Ìó‘Ô‚É–ß‚éBj
+            //ï¿½{ï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½9ï¿½bï¿½ï¿½ÉBï¿½eï¿½{ï¿½^ï¿½ï¿½ï¿½Ì—Lï¿½ï¿½Aï¿½|ï¿½ï¿½ï¿½æ‘œï¿½Ì”ï¿½\ï¿½ï¿½ï¿½Aï¿½Iï¿½[ï¿½fï¿½Bï¿½Iï¿½}ï¿½lï¿½[ï¿½Wï¿½ï¿½ï¿½Ì‰ï¿½ï¿½Ê‚ï¿½ï¿½fï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½É–ß‚ï¿½ï¿½ÄƒJï¿½ï¿½ï¿½ï¿½ï¿½vï¿½ï¿½ï¿½rï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ÄŠJï¿½ï¿½ï¿½ï¿½Bï¿½iï¿½ï¿½ÔÅï¿½ï¿½Ìï¿½Ô‚É–ß‚ï¿½Bï¿½j
             returnTimer.schedule(new TimerTask() {
                 @Override
                 public void run() {
@@ -169,13 +170,13 @@ public class FullscreenActivity extends Activity implements View.OnClickListener
 
                     AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
-                    // ‰¹—Ê‚ğÅ‘å‚Éˆø‚«ã‚°‚é‘O‚Ì‚à‚Ì‚Éİ’è‚·‚é
+                    // ï¿½ï¿½ï¿½Ê‚ï¿½ï¿½Å‘ï¿½Éˆï¿½ã‚°ï¿½ï¿½Oï¿½Ì‚ï¿½ï¿½Ì‚Éİ’è‚·ï¿½ï¿½
                     am.setStreamVolume(AudioManager.STREAM_MUSIC, previousRingVolume, AudioManager.FLAG_PLAY_SOUND);
 
-                    //˜AÊ—pƒ^ƒCƒ}[‚ğ’â~
+                    //ï¿½Aï¿½Ê—pï¿½^ï¿½Cï¿½}ï¿½[ï¿½ï¿½ï¿½~
                     shotTimer.cancel();
 
-                    //ƒJƒƒ‰‚ÌƒvƒŒƒrƒ…[‚ğÄŠJ
+                    //ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½Ìƒvï¿½ï¿½ï¿½rï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ÄŠJ
                     cameraPreview.mCamera.startPreview();
                 }
             }, 9000);
